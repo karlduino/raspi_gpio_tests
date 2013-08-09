@@ -1,0 +1,21 @@
+# pushbutton for LEDs
+
+require 'wiringpi'
+io = WiringPi::GPIO.new
+io.mode(0, OUTPUT)
+io.mode(1, OUTPUT)
+io.mode(2, OUTPUT)
+io.mode(3, INPUT)
+
+while true
+  if io.read(3)==HIGH
+    io.write(0, HIGH)
+    io.write(1, HIGH)
+    io.write(2, HIGH)
+  else
+    io.write(0, LOW)
+    io.write(1, LOW)
+    io.write(2, LOW)
+  end
+end
+
