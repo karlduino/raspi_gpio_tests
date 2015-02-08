@@ -1,21 +1,25 @@
+#!/home/pi/.rvm/bin/rvmsudo ruby
 # pushbutton for LEDs
+
+leds = [1, 4, 5]
+button = 6
 
 require 'wiringpi'
 io = WiringPi::GPIO.new
-io.mode(0, OUTPUT)
-io.mode(1, OUTPUT)
-io.mode(2, OUTPUT)
-io.mode(3, INPUT)
+leds.each { |pin| io.mode(pin, OUTPUT) }
+io.mode(button, INPUT)
 
-while true
-  if io.read(3)==HIGH
-    io.write(0, HIGH)
-    io.write(1, HIGH)
-    io.write(2, HIGH)
-  else
-    io.write(0, LOW)
-    io.write(1, LOW)
-    io.write(2, LOW)
-  end
+at_exit do
+    puts "exiting"
+    leds.each { |pin| io.write(pin, LOW) }
 end
 
+puts "all set"
+
+while true
+    if io.read(button)==HIGH
+        leds.each { |pin| io.write(pin, HIGH) }
+    else
+        leds.each { |pin| io.write(pin, LOW) }
+    end
+end

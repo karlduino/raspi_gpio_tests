@@ -1,6 +1,0 @@
-# turn off LED on pin 0
-require 'wiringpi'
-io = WiringPi::GPIO.new
-io.mode(0, OUTPUT)
-io.write(0, LOW)
-

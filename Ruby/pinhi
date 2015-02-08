@@ -1,0 +1,12 @@
+#!/home/pi/.rvm/bin/rvmsudo ruby
+# turn on LED on pin
+require 'wiringpi'
+
+pin = ARGV[0]
+pin = 0 if pin==""
+pin = pin.to_i
+
+io = WiringPi::GPIO.new
+io.mode(pin, OUTPUT)
+io.write(pin, HIGH)
+puts "pin #{pin} on"

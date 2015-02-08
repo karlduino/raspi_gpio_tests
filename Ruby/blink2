@@ -1,29 +1,39 @@
+#!/home/pi/.rvm/bin/rvmsudo ruby
 # blink two LEDs
 
-num_blinks = ARGV[0].to_i
+pin1 = ARGV[0].to_i
+pin1 = 0 if pin1 == nil or pin1 < 0
+pin2 = ARGV[1].to_i
+pin2 = 1 if pin2 == nil or pin2 < 0
+pin2 = pin1 + 1 if pin2 == pin1
+
+num_blinks = ARGV[2].to_i
 num_blinks = 1 if num_blinks == nil or num_blinks < 1
 
 plural = num_blinks>1 ? "s" : ""
 puts "blink #{num_blinks} time#{plural}"
 
-delay_time = ARGV[1].to_f
+delay_time = ARGV[3].to_f
 delay_time = 0.5 if delay_time <= 0
 puts "delay_time = #{delay_time}"
 
 require 'wiringpi'
 io = WiringPi::GPIO.new
-io.mode(0, OUTPUT)
-io.mode(1, OUTPUT)
+io.mode(pin1, OUTPUT)
+io.mode(pin2, OUTPUT)
+at_exit do
+  io.write(pin1, LOW)
+  io.write(pin2, LOW)
+end
 
 for i in 1..num_blinks
-  io.write(0, HIGH)
-  io.write(1, LOW)
+  io.write(pin1, HIGH)
+  io.write(pin2, LOW)
   sleep(delay_time)
 
-  io.write(0, LOW)
-  io.write(1, HIGH)
+  io.write(pin1, LOW)
+  io.write(pin2, HIGH)
   sleep(delay_time)
 end
 
-io.write(1, LOW)
-
+io.write(pin2, LOW)
