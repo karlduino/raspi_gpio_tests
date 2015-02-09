@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/sudo python
 
 import wiringpi2 as wiringpi
 import random

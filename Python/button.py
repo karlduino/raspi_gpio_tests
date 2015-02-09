@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/sudo python
 #
 # button.py: button + 3 LEDs on raspberry pi
 #
